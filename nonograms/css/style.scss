@@ -1,10 +1,8 @@
 body {
   font-family: 'Roboto Mono', monospace;
-  height: 100vh;
-  display: flex;
   background-color: #b7c2b0;
-  background: url('../assets/light-background.jpeg') center center/cover no-repeat;
-  padding: 40px;
+  height: 100vh;
+  // background: url('../assets/light-background.jpeg') center center/cover no-repeat;
 }
 
 body.lock {
@@ -14,9 +12,36 @@ body.lock {
 body.dark {
   background: url('../assets/dark-background.jpg') center center/cover no-repeat;
 }
+body.light {
+  background: url('../assets/light-background.jpeg') center center/cover no-repeat;
+}
 
 div {
   box-sizing: border-box;
+}
+.main {
+  display: flex;
+  padding: 40px;
+}
+
+.header {
+  // background: rgba(205, 180, 219, 0.5);
+  display: flex;
+  justify-content: center;
+  &__title {
+    font-family: "WindSong", cursive;
+    font-weight: 500;
+    font-size: 55px;
+    // color: #f9fbf2;
+    color: #fff056;
+    margin: 30px 0 10px 0;
+    cursor: pointer;
+    transition: 0.6s;
+    &:hover {
+      color: #4E6649;
+      transition: 0.6s;
+    }
+  }
 }
 
 .game {
@@ -48,9 +73,9 @@ div {
     display: flex;
   }
 
-  &__aside {
-    // border-right: 2px solid black;
-  }
+  // &__aside {
+  //   // border-right: 2px solid black;
+  // }
 
   &__row {
     display: flex;
@@ -183,6 +208,11 @@ div {
   &__light-theme {
     display: none;
   }
+  // &__github {
+  //   font-family: 'Indie Flower', cursive;
+  //   font-size: 25px;
+  //   color: #000;
+  // }
 }
 
 .btn {
@@ -353,6 +383,13 @@ div {
       font-size: 18px;
     }
   }
+  &__subtitle {
+    margin-top: 10px;
+    font-size: 14px;
+    span {
+      color: #b6ad90;
+    }
+  }
   &__select {
     margin-bottom: 10px;
   }
@@ -394,7 +431,7 @@ div {
 
 
 @media screen and (max-width: 1140px) {
-  body {
+  .main {
     flex-wrap: wrap;
   }
 
@@ -440,7 +477,7 @@ div {
 }
 
 @media screen and (max-width: 700px) {
-  body {
+  .main {
     padding: 15px;
   }
   .sidebar {

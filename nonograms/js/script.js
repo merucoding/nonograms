@@ -3,7 +3,7 @@ function createElement(tag, elemClass, elemParent) {
   elem.className = elemClass;
   elemParent.append(elem);
   return elem;
-}
+} // функция для создания элемента
 
 function createRow(tag, rowParent, cellCount, content) {
   const row = document.createElement('div');
@@ -38,7 +38,7 @@ function createSelect(id) {
   const icon = createElement('img', '', button);
   icon.src = 'assets/arrow-down.svg';
   icon.alt = '';
-}
+} // функция для создания кнопок выбора уровня, шаблона игры
 
 function createList(parent, liArr, liCount) {
   const list = createElement('ul', 'select__options', parent);
@@ -47,7 +47,7 @@ function createList(parent, liArr, liCount) {
     const li = createElement('li', 'select__option', list);
     li.textContent = liArr[i];
   }
-}
+} // функция для создания выпадающего меню выбора уровня, шаблона игры
 
 function clrInterval() {
   timerIsRunning = false;
@@ -213,8 +213,7 @@ function updateSize() {
 window.addEventListener('resize', updateSize);
 
 function addBorder(size) {
-  const theme = JSON.parse(localStorage.getItem('theme'));
-  console.log(theme);
+  const theme = localStorage.getItem('theme');
   
   const header = document.querySelector('.game__header');
   const headerRow = header.querySelector('.game__row');
@@ -351,15 +350,12 @@ function writeLS(button, lsKey, temp) {
   let arr = JSON.parse(localStorage.getItem(lsKey));
   const id = button.getAttribute('id');
 
-  console.log(arr);
-
   if (arr.length !== null && arr.includes(id)) {
     arr.splice(arr.indexOf(id), 1);
   } else {
     arr.push(id);
   }
 
-  console.log(arr);
   localStorage.setItem(lsKey, JSON.stringify(arr));
   if (temp) {
     checkWin(temp);
@@ -414,7 +410,7 @@ function checkTable() {
     }
   });
 
-  console.log(lsResArr);
+  // console.log(lsResArr);
 
   for (let i = 0; i < lsResArr.length; i++) {
     const tableRow = createElement('tr', 'table__row', tableBody);
@@ -428,7 +424,7 @@ function checkTable() {
   }
 
   localStorage.setItem('results', JSON.stringify(lsResArr));
-}
+}  // функция для генерации таблицы результатов
 
 function resetGame() {
   localStorage.setItem('match', JSON.stringify([]));
@@ -464,8 +460,9 @@ function setActiveClassOption(parent, size) {
 }
 
 function toogleTheme() {
-  const theme = JSON.parse(localStorage.getItem('theme'));
-  document.body.classList.toggle('dark');
+  const theme = localStorage.getItem('theme');
+  checkTheme();  
+  // document.body.classList.toggle('dark');
   document.querySelector('.game__container').classList.toggle('game__container_dark');
   document.querySelectorAll('.btn').forEach((btn) => {
     btn.classList.toggle('btn_dark');
@@ -505,4 +502,15 @@ function toogleTheme() {
       el.classList.remove('game__cell_dark');
     });
   }
-}
+}  // функция для смены темы страницы
+
+function checkTheme() {
+  const theme = localStorage.getItem('theme');
+  if (theme === 'light') {
+    document.body.classList.add('light');
+    document.body.classList.remove('dark');
+  } else if (theme === 'dark') {
+    document.body.classList.remove('light');
+    document.body.classList.add('dark');
+  }
+} // функция для смены темы бэкграунда
