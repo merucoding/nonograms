@@ -214,95 +214,72 @@ window.addEventListener('resize', updateSize);
 
 function addBorder(size) {
   const theme = localStorage.getItem('theme');
-  
   const header = document.querySelector('.game__header');
   const headerRow = header.querySelector('.game__row');
   const headerCells = headerRow.querySelectorAll('.game__cell');
-
   const aside = document.querySelector('.game__aside');
   const asideRows = aside.querySelectorAll('.game__row');
-
-  if (theme === 'light') {
-    header.style.borderBottom = '2px solid #000';
-    aside.style.borderRight = '2px solid #000';
-  } else {
-    header.style.borderBottom = '2px solid #f9fbf2';
-    aside.style.borderRight = '2px solid #f9fbf2';
-  }
-
-  for (let i = 0; i < headerCells.length; i += size) {
-    if (theme === 'light') {
-      headerCells[i].style.borderLeft = '2px solid #000';
-    } else {
-      headerCells[i].style.borderLeft = '2px solid #f9fbf2';
-    }
-  }
-
-  for (let i = 4; i < headerCells.length; i += 5) {
-    if (theme === 'light') {
-      headerCells[i].style.borderRight = '2px solid #000';
-    } else {
-      headerCells[i].style.borderRight = '2px solid #f9fbf2';
-    }
-  }
-
+  const gameBoard = wrapper.querySelector('.game__board');
+  const gameBoardRows = gameBoard.querySelectorAll('.game__row');
+  const gameCells = gameBoard.querySelectorAll('.game__cell');
   const index = size - 1;
 
-  asideRows[index].querySelectorAll('.game__cell').forEach((cell) => {
-    // cell.style.borderBottom = 'solid 2px #000';
-    if (theme === 'light') {
-      cell.style.borderBottom = '2px solid #000';
-    } else {
-      cell.style.borderBottom = '2px solid #f9fbf2';
+  for (let i = 0; i < headerCells.length; i++) {
+    if (i % size === 0) {
+      headerCells[i].style.borderLeft = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
     }
+    if (i % 5 === 4) {
+      headerCells[i].style.borderRight = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
+    }
+  }
+
+  asideRows[index].querySelectorAll('.game__cell').forEach((cell) => {
+    cell.style.borderBottom = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
   });
 
   for (let i = 0; i < asideRows.length; i += 5) {
     const asideCells = asideRows[i].querySelectorAll('.game__cell');
     asideCells.forEach((cell) => {
-      // cell.style.borderTop = 'solid 2px #000';
-      if (theme === 'light') {
-        cell.style.borderTop = '2px solid #000';
-      } else {
-        cell.style.borderTop = '2px solid #f9fbf2';
-      }
+      cell.style.borderTop = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
     });
   }
-
-  const gameBoard = wrapper.querySelector('.game__board');
-  const gameRows = gameBoard.querySelectorAll('.game__row');
-  const gameCells = gameBoard.querySelectorAll('.game__cell');
 
   for (let i = 4; i < gameCells.length; i += 5) {
-    // gameCells[i].style.borderRight = 'solid 2px #000';
-    if (theme === 'light') {
-      gameCells[i].style.borderRight = '2px solid #000';
-    } else {
-      gameCells[i].style.borderRight = '2px solid #f9fbf2';
-    }
+    gameCells[i].style.borderRight = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
   }
 
-  for (let i = 4; i < gameRows.length; i += 5) {
-    const cells = gameRows[i].querySelectorAll('.game__cell');
-    cells.forEach((cell) => {
-      // cell.style.borderBottom = 'solid 2px #000';
-      if (theme === 'light') {
-        cell.style.borderBottom = '2px solid #000';
-      } else {
-        cell.style.borderBottom = '2px solid #f9fbf2';
-      }
-    });
+  gameBoardRows.forEach((row) => {
+    const cell = row.querySelectorAll('.game__cell')[0];
+    cell.style.borderLeft = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
+  });
+
+  gameBoardRows[index].querySelectorAll('.game__cell').forEach((cell) => {
+    cell.style.borderBottom = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
+  });
+
+  const step = gameBoardRows.length < 6 ? 1 : 5;
+
+  for (let i = 0; i < gameBoardRows.length; i += step) {
+    if (step === 1) {
+      gameBoardRows[0].querySelectorAll('.game__cell').forEach((cell) => {
+        cell.style.borderTop = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
+      });
+    } else {
+      gameBoardRows[i].querySelectorAll('.game__cell').forEach((cell) => {
+        cell.style.borderTop = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
+      });
+    }
   }
 }
 
 function clickBoardCell(temp) {
-  const boardBtns = document.querySelectorAll('button.game__cell');
+  const boardBtns = document.querySelectorAll('button.game__cell'); // ячейки
 
-  boardBtns.forEach((btn) => btn.addEventListener('click', (e) => {
+  boardBtns.forEach((btn) => btn.addEventListener('click', () => {
     if (btn.style.backgroundColor === 'black') {
       audioEmpty.currentTime = 0;
       audioEmpty.play();
-      btn.style.backgroundColor = '#ffede1';
+      btn.style.backgroundColor = '';
     } else {
       audioPkm.currentTime = 0;
       audioPkm.play();
@@ -341,7 +318,7 @@ function clickBoardCell(temp) {
     }
 
     btn.classList.toggle('game__cell_mod');
-    btn.style.backgroundColor = '#ffede1';
+    btn.style.backgroundColor = '';
     writeLS(btn, 'cross');
   }));
 }

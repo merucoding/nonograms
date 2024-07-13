@@ -38,7 +38,8 @@ div {
     cursor: pointer;
     transition: 0.6s;
     &:hover {
-      color: #4E6649;
+      // color: #4E6649;
+      color: #f9fbf2;
       transition: 0.6s;
     }
   }
@@ -103,16 +104,16 @@ div {
         content: '';
         position: absolute;
         width: 3px;
-        height: 32.7px;
-        background-color: #afcbff;
+        height: 30px;
+        background-color: #4E6649;
         transform: rotate(-45deg);
       }
       &::after {
         content: '';
         position: absolute;
         width: 3px;
-        height: 32.7px;
-        background-color: #afcbff;
+        height: 30px;
+        background-color: #4E6649;
         transform: rotate(45deg);
       }
     }
