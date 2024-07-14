@@ -226,7 +226,7 @@ function addBorder(size) {
 
   for (let i = 0; i < headerCells.length; i++) {
     if (i % size === 0) {
-      headerCells[i].style.borderLeft = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
+      headerCells[i].style.borderLeft = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2'; // f9fbf2
     }
     if (i % 5 === 4) {
       headerCells[i].style.borderRight = theme === 'light' ? '2px solid #000' : '2px solid #f9fbf2';
@@ -366,6 +366,9 @@ function checkWin(temp) {
 
     modalOpen(modalWin);
     clearInterval(interval);
+    document.querySelector('.game__wrapper').style.pointerEvents = 'none';
+    document.querySelector('.sidebar-right__save-btn').style.pointerEvents = 'none';
+    
   }
 }
 
@@ -410,6 +413,8 @@ function resetGame() {
   clrInterval();
   const gameWrapper = document.querySelector('.game__wrapper');
   if (gameWrapper) gameWrapper.innerHTML = '';
+  gameWrapper.style.removeProperty('pointer-events');
+  document.querySelector('.sidebar-right__save-btn').style.removeProperty('pointer-events');
 }
 
 function modalOpen(modal) {
@@ -437,8 +442,7 @@ function setActiveClassOption(parent, size) {
 }
 
 function toogleTheme() {
-  const theme = localStorage.getItem('theme');
-  checkTheme();  
+  checkTheme();
   // document.body.classList.toggle('dark');
   document.querySelector('.game__container').classList.toggle('game__container_dark');
   document.querySelectorAll('.btn').forEach((btn) => {
@@ -451,34 +455,21 @@ function toogleTheme() {
 
   document.querySelector('.sidebar-right__save-btn').classList.toggle('sidebar-right__save-btn_dark');
   document.querySelector('.sidebar-right__continue-btn').classList.toggle('sidebar-right__continue-btn_dark');
-  document.querySelector('.modal__content').classList.toggle('modal__content_dark');
+
+  document.querySelectorAll('.modal__content').forEach((modal) => {
+    modal.classList.toggle('modal__content_dark');
+  });
+
   document.querySelector('.modal__random-btn').classList.toggle('modal__random-btn_dark');
+  document.querySelector('.modal__subtitle').classList.toggle('modal__subtitle_dark');
+
+  document.querySelectorAll('.select__option').forEach((option) => {
+    option.classList.toggle('select__option_dark');
+  });
 
   document.querySelectorAll('.select__btn').forEach((btn) => {
     btn.classList.toggle('select__btn_dark');
   });
-
-  const timer = document.querySelector('.game__timer');
-
-  if (theme === 'dark') {
-    if (timer) {
-      timer.classList.add('game__timer_dark');
-    }
-  
-    document.querySelectorAll('.game__cell').forEach((el) => {
-      el.classList.add('game__cell_dark');
-    });
-  }
-
-  if (theme === 'light') {
-    if (timer) {
-      timer.classList.remove('game__timer_dark');
-    }
-  
-    document.querySelectorAll('.game__cell').forEach((el) => {
-      el.classList.remove('game__cell_dark');
-    });
-  }
 }  // функция для смены темы страницы
 
 function checkTheme() {
@@ -490,4 +481,4 @@ function checkTheme() {
     document.body.classList.remove('light');
     document.body.classList.add('dark');
   }
-} // функция для смены темы бэкграунда
+} // функция для смены бэкграунда

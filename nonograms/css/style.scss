@@ -117,19 +117,12 @@ div {
         transform: rotate(45deg);
       }
     }
-    &_dark {
-      // border: 0.5px solid #f9fbf2;
-      color: #f9fbf2;
-    }
   }
   &__timer {
     position: absolute;
     left: -57px;
     bottom: 8px;
     color: #000;
-    &_dark {
-      color: #f9fbf2;
-    }
   }
 }
 
@@ -303,7 +296,8 @@ div {
       background-color: #b3cec7;
     }
     &-active {
-      background-color: #fb9f89;
+      // background-color: #fb9f89;
+      background-color: #ffe94e;
     }
     &_dark {
       &:hover {
@@ -360,6 +354,9 @@ div {
     padding: 45px;
     box-sizing: border-box;
     &-win {
+      max-height: 350px;
+      overflow: auto;
+      scrollbar-width: none;
       &__content {
         height: 0;
       }
@@ -389,6 +386,11 @@ div {
     font-size: 14px;
     span {
       color: #b6ad90;
+    }
+    &_dark {
+      span {
+        color: yellow;
+      }
     }
   }
   &__select {
