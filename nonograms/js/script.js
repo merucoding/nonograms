@@ -143,12 +143,15 @@ function initTemp(temp) {
     createRow('button', board, temp.board[i].length, temp.board[i]);
   }
 
-  const desk = window.innerWidth > 700;
+  const desk = window.innerWidth > 1140;
+  const mobileLarge = window.innerWidth > 700 && window.innerWidth <= 1140;
   const mobile = window.innerWidth > 500 && window.innerWidth <= 700;
   const small = window.innerWidth <= 500;
   
   if (desk) {
     updateCell(temp, 40, 40, 25);
+  } else if (mobileLarge) {
+    updateCell(temp, 40, 30, 25);
   } else if (mobile) {
     updateCell(temp, 40, 25, 20);
   } else if (small) {
@@ -197,12 +200,15 @@ function updateCell(temp, size1, size2, size3) {
 
 function updateSize() {
   const temp = JSON.parse(localStorage.getItem('temp'));
-  const desk = window.innerWidth > 700;
+  const desk = window.innerWidth > 1140;
+  const mobileLarge = window.innerWidth > 700 && window.innerWidth <= 1140;
   const mobile = window.innerWidth > 500 && window.innerWidth <= 700;
   const small = window.innerWidth <= 500;
   
   if (desk) {
     updateCell(temp, 40, 40, 25);
+  } else if (mobileLarge) {
+    updateCell(temp, 40, 30, 25);
   } else if (mobile) {
     updateCell(temp, 40, 25, 20);
   } else if (small) {

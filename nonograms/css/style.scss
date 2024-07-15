@@ -1,8 +1,6 @@
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: #b7c2b0;
-  height: 100vh;
-  // background: url('../assets/light-background.jpeg') center center/cover no-repeat;
 }
 
 body.lock {
@@ -456,8 +454,6 @@ div {
       margin-bottom: 0;
     }
     &__reset-btn,
-    &__save-btn,
-    &__continue-btn,
     &__solution-btn,
     &__result-btn {
       margin-bottom: 0;
@@ -473,8 +469,10 @@ div {
       justify-content: end;
     }
     &__save-btn,
-    &__continue-btn {
+    &__continue-btn,
+    &__theme-btn {
       margin-left: 0;
+      margin-bottom: 0;
     }
   }
 }
@@ -496,7 +494,12 @@ div {
 }
 
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: 500px) {
+  .header {
+    &__title {
+      font-size: 36px;
+    }
+  }
   .game {
     &__cell {
       font-size: 11px;
@@ -526,6 +529,30 @@ div {
     &__save-btn,
     &__continue-btn {
       font-size: 13px;
+    }
+  }
+}
+@media screen and (max-width: 432px) {
+  .main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .sidebar {
+    &__reset-btn,
+    &__solution-btn,
+    &__result-btn {
+      padding: 5px;
+    }
+  }
+  .sidebar-right {
+    &__save-btn,
+    &__continue-btn {
+      padding: 5px;
+    }
+  }
+  .game {
+    &__container {
+      min-width: 350px;
     }
   }
 }
