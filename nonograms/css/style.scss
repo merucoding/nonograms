@@ -1,6 +1,10 @@
+html {
+  height: 100%;
+}
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: #b7c2b0;
+  height: 100%;
 }
 
 body.lock {
@@ -65,23 +69,20 @@ div {
     // border-bottom: 2px solid black;
     .game__row {
       position: relative;
+      flex-wrap: wrap;
     }
   }
 
   &__body {
     display: flex;
   }
-
   // &__aside {
   //   // border-right: 2px solid black;
   // }
-
   &__row {
     display: flex;
     justify-content: end;
-    flex-wrap: wrap;
   }
-
   &__cell {
     display: flex;
     align-items: center;
@@ -548,11 +549,6 @@ div {
     &__save-btn,
     &__continue-btn {
       padding: 5px;
-    }
-  }
-  .game {
-    &__container {
-      min-width: 350px;
     }
   }
 }
