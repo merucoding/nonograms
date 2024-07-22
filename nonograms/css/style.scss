@@ -551,4 +551,9 @@ div {
       padding: 5px;
     }
   }
+  .game {
+    &__container {
+      min-width: 350px;
+    }
+  }
 }
