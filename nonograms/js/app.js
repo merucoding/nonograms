@@ -412,6 +412,8 @@ solutionBtn.addEventListener('click', () => {
       cells[i].style.backgroundColor = 'black';
     }
   }
+
+  document.querySelector('.game__wrapper').style.pointerEvents = 'none';
 });
 
 // кнопка последние результаты
@@ -419,4 +421,9 @@ lastResultsBtn.addEventListener('click', () => {
   modalOpen(modalLastRes);
 });
 
+// наведение на ячейки
+// function hoverOnCell() {
+  
+// }
 
+// hoverOnCell();

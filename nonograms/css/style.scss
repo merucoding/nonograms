@@ -1,10 +1,10 @@
 html {
-  height: 100%;
+  min-height: 100%;
 }
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: #b7c2b0;
-  height: 100%;
+  height: auto;
 }
 
 body.lock {
@@ -115,6 +115,12 @@ div {
         background-color: #4E6649;
         transform: rotate(45deg);
       }
+    }
+    &_hover {
+      background-color: #fff056;
+    }
+    &_hover2 {
+      background-color: #e4afff;
     }
   }
   &__timer {
