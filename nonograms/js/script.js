@@ -155,7 +155,6 @@ function initTemp(temp) {
   } else if (mobile) {
     updateCell(temp, 40, 25, 20);
   } else if (small) {
-    // updateCell(temp, 40, 20, 16);
     updateCell(temp, 40, 20, 18);
   }
 
@@ -215,7 +214,6 @@ function updateSize() {
   } else if (mobile) {
     updateCell(temp, 40, 25, 20);
   } else if (small) {
-    // updateCell(temp, 40, 20, 16);
     updateCell(temp, 40, 20, 18);
   }
 }
@@ -423,7 +421,8 @@ function checkWin(temp) {
     audioWin.play();
     document.querySelector('.modal__win').textContent = time;
 
-    resArr.push([temp.name, `${temp.board.length}x${temp.board.length}`, time]);
+    // resArr.push([temp.name, `${temp.board.length}x${temp.board.length}`, time]);
+    resArr.unshift([temp.name, `${temp.board.length}x${temp.board.length}`, time]);
     localStorage.setItem('results', JSON.stringify(resArr));
     checkTable();
 
@@ -440,20 +439,22 @@ function checkTable() {
   const tableBody = document.querySelector('tbody');
   tableBody.innerHTML = '';
 
-  lsResArr.sort(function (a, b) {
-    var timeA = a[2];
-    var timeB = b[2];
+  // lsResArr.sort(function (a, b) {
+  //   var timeA = a[2];
+  //   var timeB = b[2];
 
-    if (timeA < timeB) {
-      return -1;
-    } else if (timeA > timeB) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  //   if (timeA < timeB) {
+  //     return -1;
+  //   } else if (timeA > timeB) {
+  //     return 1;
+  //   } else {
+  //     return 0;
+  //   }
+  // });
 
-  // console.log(lsResArr);
+  if (lsResArr.length > 9) {
+    lsResArr.splice(9);
+  }
 
   for (let i = 0; i < lsResArr.length; i++) {
     const tableRow = createElement('tr', 'table__row', tableBody);
@@ -506,7 +507,7 @@ function setActiveClassOption(parent, size) {
 
 function toogleTheme() {
   checkTheme();
-  // document.body.classList.toggle('dark');
+  
   document.querySelector('.game__container').classList.toggle('game__container_dark');
   document.querySelectorAll('.btn').forEach((btn) => {
     btn.classList.toggle('btn_dark');

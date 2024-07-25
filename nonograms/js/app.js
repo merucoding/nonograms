@@ -174,9 +174,6 @@ saveGameBtn.textContent = 'Save game';
 const continueGameBtn = createElement('button', 'sidebar-right__continue-btn', rightSidebarContainer);
 continueGameBtn.textContent = 'Continue last game';
 
-// const github = createElement('div', 'sidebar-right__github', rightSidebarContainer);
-// github.textContent = 'my Gitgub ✨';
-
 // Инициализация  игры ----------------------------------------------------------------------------- !
 function gameInit() {
   temps[0].classList.add('select__option-active'); // первый шаблон по умол
@@ -420,10 +417,3 @@ solutionBtn.addEventListener('click', () => {
 lastResultsBtn.addEventListener('click', () => {
   modalOpen(modalLastRes);
 });
-
-// наведение на ячейки
-// function hoverOnCell() {
-  
-// }
-
-// hoverOnCell();
