@@ -7,15 +7,15 @@ function createElement(tag, elemClass, elemParent) {
 
 function createRow(tag, rowParent, cellCount, content) {
   const row = document.createElement('div');
-
   row.className = 'game__row';
 
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement(tag);
     cell.className = 'game__cell';
-    if (content && tag !== 'button') {
+
+    if (rowParent.className !== 'game__board') {
       cell.textContent = content[i];
-    } else if (tag === 'button') {
+    } else {
       const board = document.querySelector('.game__board');
       const rowCount = board.querySelectorAll('.game__row').length;
       cell.setAttribute('id', `${rowCount}-${i}`);
@@ -140,7 +140,7 @@ function initTemp(temp) {
   }
 
   for (let i = 0; i < temp.board.length; i++) {
-    createRow('button', board, temp.board[i].length, temp.board[i]);
+    createRow('div', board, temp.board[i].length, temp.board[i]);
   }
 
   const desk = window.innerWidth > 1140;
@@ -155,7 +155,7 @@ function initTemp(temp) {
   } else if (mobile) {
     updateCell(temp, 40, 25, 20);
   } else if (small) {
-    updateCell(temp, 40, 20, 16);
+    updateCell(temp, 40, 20, 18);
   }
 
   addBorder(temp.board.length);
@@ -168,6 +168,8 @@ function initTemp(temp) {
   spanMinute.textContent = '00';
   colon.textContent = ':';
   spanSec.textContent = '00';
+
+  document.querySelector('.sidebar-right__save-btn').style.pointerEvents = 'none';
 }
 
 function updateCell(temp, size1, size2, size3) {
@@ -212,7 +214,7 @@ function updateSize() {
   } else if (mobile) {
     updateCell(temp, 40, 25, 20);
   } else if (small) {
-    updateCell(temp, 40, 20, 16);
+    updateCell(temp, 40, 20, 18);
   }
 }
 
@@ -279,9 +281,13 @@ function addBorder(size) {
 }
 
 function clickBoardCell(temp) {
-  const boardBtns = document.querySelectorAll('button.game__cell'); // ячейки
+  const board = document.querySelector('.game__board');
+  const boardBtns = board.querySelectorAll('.game__cell'); // ячейки
+  const desk = window.innerWidth > 1140;
+  const theme = localStorage.getItem('theme');
 
   boardBtns.forEach((btn) => btn.addEventListener('click', () => {
+    document.querySelector('.sidebar-right__save-btn').style.removeProperty('pointer-events');
     if (btn.style.backgroundColor === 'black') {
       audioEmpty.currentTime = 0;
       audioEmpty.play();
@@ -327,6 +333,55 @@ function clickBoardCell(temp) {
     btn.style.backgroundColor = '';
     writeLS(btn, 'cross');
   }));
+
+  if (desk) {
+    for (let i = 0; i < boardBtns.length; i++) {
+      boardBtns[i].addEventListener('mouseover', (e) => {
+        const target = e.target;
+
+        const btn = boardBtns[i];
+        btn.classList.add('game__cell_hover');
+      
+        const parent = btn.parentElement;
+        const arr = Array.from(parent.querySelectorAll('.game__cell'));
+        const index = arr.indexOf(target);
+
+        const children = parent.querySelectorAll('.game__cell');
+        children.forEach((btn) => {
+          if (!btn.classList.contains('game__cell_hover')) {
+            btn.classList.add('game__cell_hover2');
+          }
+        });
+
+        const gameBoard = parent.parentElement;
+        const rows = gameBoard.querySelectorAll('.game__row');
+
+        for (let j = 0; j < rows.length; j++) {
+          const cells = rows[j].querySelectorAll('.game__cell');
+          if (!cells[index].classList.contains('game__cell_hover')) {
+            cells[index].classList.add('game__cell_hover2');
+          }
+        }
+      });
+
+      boardBtns[i].addEventListener('mouseout', () => {
+        const btn = boardBtns[i];
+        btn.classList.remove('game__cell_hover');
+
+        const parent = btn.parentElement;
+        const children = parent.querySelectorAll('.game__cell');
+        children.forEach((btn) => btn.classList.remove('game__cell_hover2'));
+
+        const gameBoard = parent.parentElement;
+        const rows = gameBoard.querySelectorAll('.game__row');
+
+        for (let j = 0; j < rows.length; j++) {
+          const cells = rows[j].querySelectorAll('.game__cell');
+          cells.forEach((cell) => cell.classList.remove('game__cell_hover2'));
+        }
+      });
+    }
+  }
 }
 
 function writeLS(button, lsKey, temp) {
@@ -366,7 +421,8 @@ function checkWin(temp) {
     audioWin.play();
     document.querySelector('.modal__win').textContent = time;
 
-    resArr.push([temp.name, `${temp.board.length}x${temp.board.length}`, time]);
+    // resArr.push([temp.name, `${temp.board.length}x${temp.board.length}`, time]);
+    resArr.unshift([temp.name, `${temp.board.length}x${temp.board.length}`, time]);
     localStorage.setItem('results', JSON.stringify(resArr));
     checkTable();
 
@@ -383,20 +439,22 @@ function checkTable() {
   const tableBody = document.querySelector('tbody');
   tableBody.innerHTML = '';
 
-  lsResArr.sort(function (a, b) {
-    var timeA = a[2];
-    var timeB = b[2];
+  // lsResArr.sort(function (a, b) {
+  //   var timeA = a[2];
+  //   var timeB = b[2];
 
-    if (timeA < timeB) {
-      return -1;
-    } else if (timeA > timeB) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  //   if (timeA < timeB) {
+  //     return -1;
+  //   } else if (timeA > timeB) {
+  //     return 1;
+  //   } else {
+  //     return 0;
+  //   }
+  // });
 
-  // console.log(lsResArr);
+  if (lsResArr.length > 9) {
+    lsResArr.splice(9);
+  }
 
   for (let i = 0; i < lsResArr.length; i++) {
     const tableRow = createElement('tr', 'table__row', tableBody);
@@ -449,7 +507,7 @@ function setActiveClassOption(parent, size) {
 
 function toogleTheme() {
   checkTheme();
-  // document.body.classList.toggle('dark');
+  
   document.querySelector('.game__container').classList.toggle('game__container_dark');
   document.querySelectorAll('.btn').forEach((btn) => {
     btn.classList.toggle('btn_dark');
